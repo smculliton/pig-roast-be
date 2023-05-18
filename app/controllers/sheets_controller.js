@@ -1,8 +1,33 @@
 const { google } = require('googleapis')
-const sheets = google.sheets({ version: 'v4', auth: process.env.GOOGLE_API_KEY })
 
-const appendRow = (req, res) => {
-  console.log(process.env.GOOGLE_API_KEY)
+
+const appendRow = async (req, res) => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: './pig-roast-rsvp-ae66afd90570.json',
+    scopes: [
+      'https://www.googleapis.com/auth/drive',
+      'https://www.googleapis.com/auth/drive.file',
+      'https://www.googleapis.com/auth/spreadsheets',
+    ]
+  })
+
+  const sheets = google.sheets({ version: 'v4', auth: auth })
+
+  try {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: '1K-ALlp-dqYRLd2VdG_nS4rEc6dmFWuMAuX_KUYStb3k',
+      range: 'RSVPS!A1:D1',
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        values: [[req.body.firstName, req.body.lastName, req.body.sideDish, req.body.numberPeople]]
+      }
+    })
+
+    res.status(200).json({ message: 'Row appended to Google Sheet' })
+  } catch (error) {
+    console.error('Google Sheets API error:', error);
+    res.status(500).json({ error: 'Failed to append row to Google Sheet' })
+  }
 }
 
 module.exports = {

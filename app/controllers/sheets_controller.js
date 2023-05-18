@@ -3,7 +3,7 @@ const { google } = require('googleapis')
 
 const appendRow = async (req, res) => {
   const auth = new google.auth.GoogleAuth({
-    keyFile: './pig-roast-rsvp-ae66afd90570.json',
+    keyFile: `${process.env.GOOGLE_APPLICATION_CREDENTIALS}`,
     scopes: [
       'https://www.googleapis.com/auth/drive',
       'https://www.googleapis.com/auth/drive.file',

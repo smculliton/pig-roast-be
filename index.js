@@ -1,20 +1,15 @@
-// index.js
 const express = require('express')
+const dotenv = require('dotenv')
+const cors = require('cors')
+
+dotenv.config()
 
 const app = express()
-const PORT = 4000
+const port = 3002
 
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `)
-})
+app.use(express.json(), cors())
 
-app.get('/', (req, res) => {
-  res.send('Hey this is my API running 🥳')
-})
+const sheetsRouter = require('./app/routes/sheets_router')
+app.use('/api/v1/sheets', sheetsRouter)
 
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ')
-})
-
-// Export the Express API
-module.exports = app
+app.listen(port, () => console.log(`app listening on port ${port}`))

@@ -12,4 +12,4 @@ app.use(express.json(), cors())
 const sheetsRouter = require('./app/routes/sheets_router')
 app.use('/api/v1/sheets', sheetsRouter)
 
-module.exports = app
+app.listen(port, () => console.log(`app listening on port ${port}`))

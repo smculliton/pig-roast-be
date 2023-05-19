@@ -9,6 +9,10 @@ const port = 3002
 
 app.use(express.json(), cors())
 
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
+
 const sheetsRouter = require('./app/routes/sheets_router')
 app.use('/api/v1/sheets', sheetsRouter)
 

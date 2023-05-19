@@ -17,3 +17,5 @@ const sheetsRouter = require('./app/routes/sheets_router')
 app.use('/api/v1/sheets', sheetsRouter)
 
 app.listen(port, () => console.log(`app listening on port ${port}`))
+
+module.exports = app
